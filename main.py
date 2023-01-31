@@ -24,7 +24,7 @@ def quickSort():
 
 def bubbleSort(rand_vals, draw, timed):
     for i in range(len(rand_vals)):
-        for j in range(len(rand_vals)-i):
+        for j in range(len(rand_vals)-i - 1):
             if rand_vals[j] > rand_vals[j + 1]:
                 rand_vals[j], rand_vals[j + 1] = rand_vals[j + 1], rand_vals[j]
                 draw(rand_vals, ["#FF0000" if x == j or x == j+1 else "#ADD8E6" for x in range(len(rand_vals))])
@@ -66,7 +66,7 @@ def generate():
 
 def sort():
     global rand_vals
-    timeTick = 5
+    timeTick = 0.01
 
     if dropdown.get() == "Bubble Sort":
         bubbleSort(rand_vals, draw, timeTick)
