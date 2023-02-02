@@ -13,8 +13,16 @@ vis.geometry("1280x800")
 
 #sorting algorithms
 
-def selectionSort():
-    pass
+def selectionSort(rand_vals, draw, timed):
+    for i in range(len(rand_vals)):
+        min_idx = i
+        for j in range(i+1, len(rand_vals)):
+            if rand_vals[min_idx] > rand_vals[j]:
+                min_idx = j
+        rand_vals[i], rand_vals[min_idx] = rand_vals[min_idx], rand_vals[i]
+        draw(rand_vals, ["#FF0000" if x == i or x == i+1 else "#ADD8E6" for x in range(len(rand_vals))])
+        time.sleep(timed)
+    draw(rand_vals, ["#ADD8E6" for x in range(len(rand_vals))])
 
 def insertionSort():
     pass
@@ -29,7 +37,7 @@ def bubbleSort(rand_vals, draw, timed):
                 rand_vals[j], rand_vals[j + 1] = rand_vals[j + 1], rand_vals[j]
                 draw(rand_vals, ["#FF0000" if x == j or x == j+1 else "#ADD8E6" for x in range(len(rand_vals))])
                 time.sleep(timed)
-    draw(rand_vals, "#ADD8E6")
+    draw(rand_vals, ["#ADD8E6" for x in range(len(rand_vals))])
 def mergeSort():
     pass
 #simulation
@@ -70,6 +78,8 @@ def sort():
 
     if dropdown.get() == "Bubble Sort":
         bubbleSort(rand_vals, draw, timeTick)
+    elif dropdown.get() == "Selection Sort":
+        selectionSort(rand_vals, draw, timeTick)
 
 #ui
 sel_frame = Frame(vis, width = 1000, height = 200, bg = "#FFFFFF")
