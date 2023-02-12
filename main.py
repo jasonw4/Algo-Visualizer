@@ -24,8 +24,21 @@ def selectionSort(rand_vals, draw, timed):
         time.sleep(timed)
     draw(rand_vals, ["#ADD8E6" for x in range(len(rand_vals))])
 
-def insertionSort():
-    pass
+def insertionSort(rand_vals, draw, timed):
+    for i in range(1, len(rand_vals)):
+ 
+        key = rand_vals[i]
+ 
+        # Move elements of arr[0..i-1], that are
+        # greater than key, to one position ahead
+        # of their current position
+        j = i-1
+        while j >= 0 and key < rand_vals[j] :
+                rand_vals[j + 1] = rand_vals[j]
+                j -= 1
+                draw(rand_vals, ["#FF0000" if x == j else "#ADD8E6" for x in range(len(rand_vals))])
+        rand_vals[j + 1] = key
+    draw(rand_vals, ["#ADD8E6" for x in range(len(rand_vals))])
 
 def quickSort():
     pass
@@ -74,12 +87,13 @@ def generate():
 
 def sort():
     global rand_vals
-    timeTick = 0.01
 
     if dropdown.get() == "Bubble Sort":
-        bubbleSort(rand_vals, draw, timeTick)
+        bubbleSort(rand_vals, draw, 0.01)
     elif dropdown.get() == "Selection Sort":
-        selectionSort(rand_vals, draw, timeTick)
+        selectionSort(rand_vals, draw, .1)
+    elif dropdown.get() == "Insertion Sort":
+        insertionSort(rand_vals, draw, .1)
 
 #ui
 sel_frame = Frame(vis, width = 1000, height = 200, bg = "#FFFFFF")
