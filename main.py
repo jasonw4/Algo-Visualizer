@@ -28,10 +28,6 @@ def insertionSort(rand_vals, draw, timed):
     for i in range(1, len(rand_vals)):
  
         key = rand_vals[i]
- 
-        # Move elements of arr[0..i-1], that are
-        # greater than key, to one position ahead
-        # of their current position
         j = i-1
         while j >= 0 and key < rand_vals[j] :
                 rand_vals[j + 1] = rand_vals[j]
@@ -40,7 +36,7 @@ def insertionSort(rand_vals, draw, timed):
         rand_vals[j + 1] = key
     draw(rand_vals, ["#ADD8E6" for x in range(len(rand_vals))])
 
-def quickSort():
+def quickSort(rand_vals, draw, timed):
     pass
 
 def bubbleSort(rand_vals, draw, timed):
@@ -51,8 +47,36 @@ def bubbleSort(rand_vals, draw, timed):
                 draw(rand_vals, ["#FF0000" if x == j or x == j+1 else "#ADD8E6" for x in range(len(rand_vals))])
                 time.sleep(timed)
     draw(rand_vals, ["#ADD8E6" for x in range(len(rand_vals))])
-def mergeSort():
-    pass
+
+def mergeSort(maxlist, rand_vals, draw, timed):
+    if len(rand_vals) > 1:
+        mid = len(rand_vals)//2
+        left = rand_vals[:mid]
+        right = rand_vals[mid:]
+        mergeSort(maxlist, left, draw, timed)
+        mergeSort(maxlist, right, draw, timed)
+        i = j = k = 0
+        while i < len(left) and j < len(right):
+            if left[i] <= right[j]:
+                rand_vals[k] = left[i]
+                i += 1
+            else:
+                rand_vals[k] = right[j]
+                j += 1
+            k += 1
+        while i < len(left):
+            rand_vals[k] = left[i]
+            i += 1
+            k += 1
+            draw(rand_vals, ["#FF0000" if x == k or x == i else "#ADD8E6" for x in range(len(maxlist))])
+ 
+        while j < len(right):
+            rand_vals[k] = right[j]
+            j += 1
+            k += 1
+            draw(rand_vals, ["#FF0000" if x == k or x == j else "#ADD8E6" for x in range(len(maxlist))])
+    draw(rand_vals, ["#ADD8E6" for x in range(len(maxlist))])
+
 #simulation
 algo_dropdown = StringVar()
 algoList = ["Selection Sort", "Insertion Sort", "Quicksort", "Bubble Sort", "Merge Sort"]
@@ -94,6 +118,10 @@ def sort():
         selectionSort(rand_vals, draw, .1)
     elif dropdown.get() == "Insertion Sort":
         insertionSort(rand_vals, draw, .1)
+    elif dropdown.get() == "Merge Sort":
+        mergeSort(rand_vals, rand_vals, draw, 100)
+    elif dropdown.get() == "Quicksort":
+        quickSort(rand_vals, draw, 0.1)
 
 #ui
 sel_frame = Frame(vis, width = 1000, height = 200, bg = "#FFFFFF")
